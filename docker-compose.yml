@@ -1,0 +1,34 @@
+version: '3.0'
+
+networks:
+  devnet:
+    driver: bridge
+
+services:
+  nexus:
+    hostname: nexus
+    image: sonatype/nexus3:latest
+    container_name: nexus
+    ports:
+      - '8081:8081'
+    volumes:
+      - nexus_data2:/nexus-data
+    networks:
+      - devnet
+    restart: always
+
+  jenkins:
+    hostname: jenkins
+    image: jenkins/jenkins:lts
+    container_name: jenkins
+    ports:
+      - '8080:8080'
+    volumes:
+      - jenkins_data2:/var/jenkins_home
+    networks:
+      - devnet
+    restart: always
+
+volumes:
+  nexus_data2:
+  jenkins_data2:
